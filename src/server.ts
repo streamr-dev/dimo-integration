@@ -15,7 +15,11 @@ export const startMockServer = async (dongleId: string) => {
         switch (commandId) {
             case 'crypto.query':
                 if (commandParam === 'ethereum_address') {
-                    res.end(WALLET.address)
+                    res.end(JSON.stringify({
+						_stamp: new Date().toISOString(),
+						_type: 'ethereum_address',
+						value: WALLET.address,
+					}))
                 } else {
                     throw new Error(`unknown query: ${commandParam}`)
                 }
@@ -23,7 +27,10 @@ export const startMockServer = async (dongleId: string) => {
             case 'crypto.sign_string':
                 const payload = commandParam
                 const signature = signHashed(Buffer.from(payload, 'hex'), WALLET.privateKey)
-                res.end(signature)
+				res.end(JSON.stringify({
+					_stamp: new Date().toISOString(),
+					value: signature,
+				}))
                 break
             default:
                 throw new Error(`unknown command: ${commandId}`)

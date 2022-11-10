@@ -6,6 +6,12 @@ const CHAIN_ID = 12345 // irrelevant for signing messages
 
 const log = (msg: string) => console.log(`${msg}\n`)
 
+interface Response {
+	_stamp: string
+	_type?: string
+	value: string
+}
+
 export class DIMOProvider implements ExternalProvider {
 	private dongleId: string;
 
@@ -13,7 +19,7 @@ export class DIMOProvider implements ExternalProvider {
 		this.dongleId = dongleId
 	}
 
-	private sendCommand = async (command: string): Promise<string> => {
+	private sendCommand = async (command: string): Promise<Response> => {
 		const request = JSON.stringify({ command })
 		log(`API request: ${request}`)
 		const response = await fetch(`http://localhost:9000/dongle/${this.dongleId}/execute_raw/`, {
@@ -23,9 +29,9 @@ export class DIMOProvider implements ExternalProvider {
 				'Content-Type': 'application/json'
 			}
 		})
-		const responseText = response.text()
-		log('API response: ' + (await responseText))
-		return responseText
+		const jsonResponse = await response.json()
+		log('API response: ' + JSON.stringify(jsonResponse))
+		return jsonResponse
 	}
 
 	// ExternalProvider
@@ -42,7 +48,8 @@ export class DIMOProvider implements ExternalProvider {
 				const payload = Buffer.from(payloadHex.substring(2), 'hex')
 				log(`Ethereum request payload: ${payload.toString('utf-8')}`)
 				const msgHash = hash(payload)
-				return await this.sendCommand(`crypto.sign_string ${msgHash.toString('hex')}`)
+				const response = await this.sendCommand(`crypto.sign_string ${msgHash.toString('hex')}`)
+				return response.value
 			case 'eth_chainId':
 				return CHAIN_ID
 			default:
@@ -51,7 +58,8 @@ export class DIMOProvider implements ExternalProvider {
 	}
 
 	public async getAddress() {
-		return this.sendCommand('crypto.query ethereum_address')
+		const result = await this.sendCommand('crypto.query ethereum_address')
+		return result.value
 	}
 
 }
