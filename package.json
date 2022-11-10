@@ -5,12 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "LOG_LEVEL=silent ts-node src/index.ts",
+    "mock-server": "ts-node src/for-manual-testing/mock-http-server.ts",
+    "stream-subscriber": "ts-node src/for-manual-testing/stream-subscriber.ts",
+    "stream-publisher": "ts-node src/for-manual-testing/stream-publisher.ts",
+    "mqtt-publisher": "ts-node src/for-manual-testing/mqtt-publisher.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async-mqtt": "^2.6.3",
     "ethers": "^5.7.2",
     "express": "^4.18.2",
     "node-fetch": "^2.6.6",
