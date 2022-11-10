@@ -28,6 +28,7 @@ const main = async () => {
 	await mqtt.subscribe(MQTT_TOPIC)
 
 	mqtt.on('message', async (topic, message) => {
+		const messageAsString = message.toString('utf-8')
 		log(`Message from MQTT topic ${topic}: ${message}`)
 
 		const msg = await stream.publish(message)
