@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "LOG_LEVEL=silent ts-node src/index.ts",
+    "start": "ts-node src/index.ts",
     "mock-server": "ts-node src/for-manual-testing/mock-http-server.ts",
     "stream-subscriber": "ts-node src/for-manual-testing/stream-subscriber.ts",
     "stream-publisher": "ts-node src/for-manual-testing/stream-publisher.ts",
