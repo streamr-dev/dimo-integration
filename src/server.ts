@@ -6,10 +6,10 @@ import { signHashed } from './signingUtils'
 const PORT = 9000
 const WALLET = new ethers.Wallet('0x0000000000000000000000000000000000000000000000000000000000000001')
 
-export const startMockServer = async () => {
+export const startMockServer = async (dongleId: string) => {
     const app = express()
     app.use(express.json())
-    app.post('/execute_raw', async (req, res) => {
+    app.post(`/dongle/${dongleId}/execute_raw`, async (req, res) => {
         const command = req.body.command
         const [ commandId, commandParam ] = command.split(' ')
         switch (commandId) {
