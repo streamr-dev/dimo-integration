@@ -29,9 +29,9 @@ const main = async () => {
 
 	mqtt.on('message', async (topic, message) => {
 		const messageAsString = message.toString('utf-8')
-		log(`Message from MQTT topic ${topic}: ${message}`)
+		log(`Message from MQTT topic ${topic}: ${messageAsString}`)
 
-		const msg = await stream.publish(message)
+		const msg = await stream.publish(messageAsString)
 		log('Message was published to stream!')
 	})
 }
