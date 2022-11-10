@@ -1,0 +1,27 @@
+{
+  "name": "dimo-signer-poc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "LOG_LEVEL=silent ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ethers": "^5.7.2",
+    "express": "^4.18.2",
+    "node-fetch": "^2.6.6",
+    "secp256k1": "^4.0.3",
+    "streamr-client": "^7.0.0-beta.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node-fetch": "^2.5.12",
+    "@types/secp256k1": "^4.0.3"
+  }
+}
