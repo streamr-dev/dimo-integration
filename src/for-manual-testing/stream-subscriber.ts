@@ -11,7 +11,7 @@ const main = async () => {
         metrics: false
     })
 
-	const sub = await subscriber.subscribe(STREAM_ID, (content: any, metadata: MessageMetadata) => {
+    const sub = await subscriber.subscribe(STREAM_ID, (content: any, metadata: MessageMetadata) => {
         log(`Message received: ${JSON.stringify({ content, signature: metadata.signature })}`)
     })
     sub.on('error', (err: Error) => log(`Error: ${err.message}`))

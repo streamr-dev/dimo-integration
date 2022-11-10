@@ -12,10 +12,10 @@ const main = async () => {
     })
     const stream = await publisher.getStream(STREAM_ID)
 
-	setInterval(async () => {
-		const msg = await stream.publish({ foo: 'bar' })
-		log(`Publisher sent: ${JSON.stringify({ content: msg.content, signature: msg.signature })}`)
-	}, 3000)
+    setInterval(async () => {
+        const msg = await stream.publish({ foo: 'bar' })
+        log(`Publisher sent: ${JSON.stringify({ content: msg.content, signature: msg.signature })}`)
+    }, 3000)
 }
 
 main()

@@ -9,11 +9,11 @@ const MQTT_TOPIC = '#'
 const STREAM_ID = '0x66cc2122fe015aeb6dacd42d76b074b607c8c9e1/dimo-test'
 
 const main = async () => {
-	const provider = new DIMOProvider(DONGLE_ID)
-	log(`Publisher address: ${await provider.getAddress()}`)
+    const provider = new DIMOProvider(DONGLE_ID)
+    log(`Publisher address: ${await provider.getAddress()}`)
 
-	log(`Connecting to MQTT broker at ${MQTT_BROKER}...`)
-	const mqtt = await MQTT.connectAsync(MQTT_BROKER)
+    log(`Connecting to MQTT broker at ${MQTT_BROKER}...`)
+    const mqtt = await MQTT.connectAsync(MQTT_BROKER)
 
     const streamr = new StreamrClient({
         auth: {
@@ -21,20 +21,20 @@ const main = async () => {
         },
         metrics: false
     })
-	log(`Fetching target stream ${STREAM_ID}...`)
+    log(`Fetching target stream ${STREAM_ID}...`)
     const stream = await streamr.getStream(STREAM_ID)
 
-	log(`Subscribing to MQTT messages on topic ${MQTT_TOPIC}`)
-	await mqtt.subscribe(MQTT_TOPIC)
+    log(`Subscribing to MQTT messages on topic ${MQTT_TOPIC}`)
+    await mqtt.subscribe(MQTT_TOPIC)
 
-	mqtt.on('message', async (topic, message) => {
-		const messageAsString = message.toString('utf-8')
-		log(`Message from MQTT topic ${topic}: ${messageAsString}`)
-		const messageAsObject = JSON.parse(messageAsString)
+    mqtt.on('message', async (topic, message) => {
+        const messageAsString = message.toString('utf-8')
+        log(`Message from MQTT topic ${topic}: ${messageAsString}`)
+        const messageAsObject = JSON.parse(messageAsString)
 
-		const msg = await stream.publish(messageAsObject)
-		log('Message was published to stream!')
-	})
+        const msg = await stream.publish(messageAsObject)
+        log('Message was published to stream!')
+    })
 }
 
 main()

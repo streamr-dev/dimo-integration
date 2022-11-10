@@ -13,17 +13,17 @@ export const startMockServer = async (dongleId: string) => {
     app.use(express.json())
     app.post(`/dongle/${dongleId}/execute_raw`, async (req, res) => {
         const command = req.body.command
-		log(`Command received: ${command}`)
-        const [ commandId, commandParam ] = command.split(' ')
-		let response
+        log(`Command received: ${command}`)
+        const [commandId, commandParam] = command.split(' ')
+        let response
         switch (commandId) {
             case 'crypto.query':
                 if (commandParam === 'ethereum_address') {
                     response = {
-						_stamp: new Date().toISOString(),
-						_type: 'ethereum_address',
-						value: WALLET.address,
-					}
+                        _stamp: new Date().toISOString(),
+                        _type: 'ethereum_address',
+                        value: WALLET.address,
+                    }
                 } else {
                     throw new Error(`unknown query: ${commandParam}`)
                 }
@@ -31,16 +31,16 @@ export const startMockServer = async (dongleId: string) => {
             case 'crypto.sign_string':
                 const payload = commandParam
                 const signature = signHashed(Buffer.from(payload, 'hex'), WALLET.privateKey)
-				response = {
-					_stamp: new Date().toISOString(),
-					value: signature,
-				}
+                response = {
+                    _stamp: new Date().toISOString(),
+                    value: signature,
+                }
                 break
             default:
                 throw new Error(`unknown command: ${commandId}`)
         }
-		log(`Responding with: ${JSON.stringify(response)}`)
-		res.end(JSON.stringify(response))
+        log(`Responding with: ${JSON.stringify(response)}`)
+        res.end(JSON.stringify(response))
     })
     const server = app.listen(PORT)
     await once(server, 'listening')
