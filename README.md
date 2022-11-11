@@ -1,8 +1,8 @@
 # dimo-integration
 
-An integration script that listens to messages on a local MQTT server, signs them, and publishes them to a Streamr stream.
+An integration script that listens to messages on a local MQTT server, signs them, and publishes them to a Streamr stream. Intended to be run on the DIMO AutoPi hardware device.
 
-The interesting part is the custom Ethereum provider given to the `StreamrClient`, which in DIMO's case signs messages by calling a local HTTP interface that allows access to signing functions provided by the hardware security module.
+A custom Ethereum provider is given to the `StreamrClient`, which case signs messages by calling a local HTTP interface that allows access to signing functions provided by the hardware security module (HSM).
 
 ## Requirements
 
